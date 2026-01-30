@@ -27,6 +27,16 @@ a:hover {
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
 }
 
+img {
+    width: 100%;
+    height: auto;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    opacity: 0.3;
+}
+
 .linha {
     width: 30%;
     ;
@@ -49,16 +59,6 @@ h1 {
     }
 }
 
-img {
-    width: 100%;
-    height: auto;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: -1;
-    opacity: 0.3;
-}
-
 footer {
     background-color: rgba(243, 231, 231, 0);
     border-radius: 50px;
@@ -67,5 +67,18 @@ footer {
     font-family: 'Poppins', sans-serif;
     font-size: 20px;
     color: #000000;
-    margin-top: 250px;
+    margin-top: 230px;
+}
+
+h2 {
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 60px;
+    line-height: 1.6;
+    color: #333333;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.15),
+        0 8px 20px rgba(0, 0, 0, 0.2);
+    margin-top: 220px;
+    margin-bottom: 20px;
 }

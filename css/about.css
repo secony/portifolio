@@ -8,7 +8,7 @@ header {
     padding: 25px;
     text-align: center;
     text-shadow: #000000;
-    font-size: 30px;
+    font-size: 26px;
     font-family: 'Poppins', sans-serif;
     font-weight: 10;
 }
@@ -44,7 +44,9 @@ img.fundo {
         0 8px 20px rgba(0, 0, 0, 0.2);
     font-family: 'Poppins', sans-serif;
     color: #000000;
-    ;
+    strong {
+        color: #5a4634;
+    }
 
 }
 
@@ -52,10 +54,11 @@ img.fundo {
     max-width: 800px;
     text-align: center;
     margin: 0 auto;
-    padding: 20px;
+    max-width: 600px;
+    padding: 10px;
     font-family: 'Poppins', sans-serif;
     font-weight: 1;
-    font-size: 30px;
+    font-size: 23px;
     line-height: 1.6;
     color: #333333;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.15),
@@ -64,7 +67,7 @@ img.fundo {
 }
 
 .linha {
-    width: 30%;
+    width: 32%;
     ;
     height: 1px;
     background-color: rgba(0, 0, 0, 0.2);
@@ -73,7 +76,7 @@ img.fundo {
 }
 
 .linha2 {
-    width: 50%;
+    width: 46%;
     ;
     height: 2px;
     background-color: rgba(0, 0, 0, 0.2);
@@ -88,7 +91,7 @@ img.fundo {
 p2 {
     font-family: 'Poppins', sans-serif;
     font-weight: 400;
-    font-size: 35px;
+    font-size: 28px;
     line-height: 1.6;
     color: #333333;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.15),
@@ -100,7 +103,7 @@ h2 {
     text-align: center;
     font-family: 'Poppins', sans-serif;
     font-weight: 600;
-    font-size: 60px;
+    font-size: 40px;
     line-height: 1.6;
     color: #333333;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.15),
@@ -114,8 +117,7 @@ img.js-img {
     justify-content: center;
     align-items: center;
     margin-top: 20px;
-    width: 300px;
-    height: 70px;
+    height: 50px;
     transform: scale(1);
     transition: transform 0.3s ease;
 }
@@ -129,7 +131,7 @@ img.css-img {
     justify-content: center;
     align-items: center;
     margin-top: 20px;
-    height: 70px;
+    height: 55px;
     transform: scale(1);
     transition: transform 0.3s ease;
 }
@@ -143,7 +145,7 @@ img.html-img {
     justify-content: center;
     align-items: center;
     margin-top: 20px;
-    height: 70px;
+    height: 55px;
     transform: scale(1);
     transition: transform 0.3s ease;
 }
@@ -165,7 +167,7 @@ img.vscode-img {
     justify-content: center;
     align-items: center;
     margin-top: 20px;
-    height: 70px;
+    height: 55px;
     transform: scale(1);
     transition: transform 0.3s ease;
 }
@@ -179,7 +181,7 @@ img.github-img {
     justify-content: center;
     align-items: center;
     margin-top: 20px;
-    height: 70px;
+    height: 55px;
     transform: scale(1);
     transition: transform 0.3s ease;
 }
@@ -193,7 +195,7 @@ img.git-img {
     justify-content: center;
     align-items: center;
     margin-top: 20px;
-    height: 70px;
+    height: 55px;
     transform: scale(1);
     transition: transform 0.3s ease;
 }
@@ -207,7 +209,7 @@ img.vercel-img {
     justify-content: center;
     align-items: center;
     margin-top: 20px;
-    height: 70px;
+    height: 55px;
     transform: scale(1);
     transition: transform 0.3s ease;
 }
@@ -222,6 +224,7 @@ div.tools-icon {
     align-items: center;
     gap: 50px;
     margin-top: 30px;
+
 }
 
 footer {
@@ -230,7 +233,7 @@ footer {
     padding: 20px;
     text-align: center;
     font-family: 'Poppins', sans-serif;
-    font-size: 20px;
+    font-size: 15px;
     color: #000000;
     margin-top: 50px;
 }
@@ -240,18 +243,9 @@ p.hobbies {
     margin: 0 auto;
     font-family: 'Poppins', sans-serif;
     font-weight: 400;
-    font-size: 30px;
+    font-size: 22px;
     line-height: 1.6;
     color: #333333;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.15),
         0 8px 20px rgba(0, 0, 0, 0.2);
-}
-
-html {
-    font-size: 16px;
-}
-
-body {
-    font-family: 'Poppins', sans-serif;
-    line-height: 1.4;
 }

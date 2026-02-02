@@ -14,10 +14,13 @@ const applyTheme = (theme) => {
     if (!toggle) {
         return;
     }
-    toggle.textContent = theme === "dark" ? "Modo claro" : "Modo escuro";
+    const isDark = theme === "dark";
+    toggle.innerHTML = isDark
+        ? "<span class=\"icon\" aria-hidden=\"true\">☀</span><span class=\"label\">Light mode</span>"
+        : "<span class=\"icon\" aria-hidden=\"true\">🌙</span><span class=\"label\">Dark mode</span>";
     toggle.setAttribute(
         "aria-label",
-        theme === "dark" ? "Ativar modo claro" : "Ativar modo escuro"
+        isDark ? "Ativar modo claro" : "Ativar modo escuro"
     );
 };
 

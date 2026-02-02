@@ -1,5 +1,5 @@
 body {
-    background-color: #faebd7;
+    background-color: var(--bg);
 }
 
 header {
@@ -23,7 +23,7 @@ nav a {
 }
 
 a:hover {
-    color: rgba(2, 2, 2, 0.801);
+    color: var(--link-hover);
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
 }
 
@@ -31,7 +31,7 @@ a:hover {
     width: 32%;
     ;
     height: 1px;
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: var(--line);
     margin: 40px auto;
     margin-top: -30px;
 }
@@ -43,7 +43,7 @@ img.fundo {
     top: 0;
     left: 0;
     z-index: -1;
-    opacity: 0.3;
+    opacity: var(--bg-img-opacity);
 }
 
 .container h1 {
@@ -52,20 +52,19 @@ img.fundo {
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.15),
         0 8px 20px rgba(0, 0, 0, 0.2);
     font-family: 'Poppins', sans-serif;
-    color: #000000;
+    color: var(--text);
 
-    strong {
-        color: #5a4634;
-    }
+}
 
-
+.container h1 strong {
+    color: var(--accent);
 }
 
 .container p {
     text-align: center;
     font-size: 25px;
     font-family: 'Poppins', sans-serif;
-    color: #000000;
+    color: var(--text);
     margin: 0 20%;
 }
 
@@ -74,7 +73,7 @@ div.contact-methods a {
     margin-top: 40px;
     font-size: 26px;
     font-family: 'Poppins', sans-serif;
-    color: #3109e4;
+    color: var(--link);
     text-shadow: none;
 }
 
@@ -85,7 +84,7 @@ footer {
     text-align: center;
     font-family: 'Poppins', sans-serif;
     font-size: 15px;
-    color: #000000;
+    color: var(--text);
     margin-top: 29px;
 }
 

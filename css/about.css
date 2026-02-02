@@ -1,5 +1,5 @@
 body {
-    background-color: #faebd7;
+    background-color: var(--bg);
 }
 
 header {
@@ -23,7 +23,7 @@ nav a {
 }
 
 a:hover {
-    color: rgba(2, 2, 2, 0.801);
+    color: var(--link-hover);
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
 }
 
@@ -34,7 +34,7 @@ img.fundo {
     top: 0;
     left: 0;
     z-index: -1;
-    opacity: 0.3;
+    opacity: var(--bg-img-opacity);
 }
 
 .container h1 {
@@ -43,11 +43,12 @@ img.fundo {
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.15),
         0 8px 20px rgba(0, 0, 0, 0.2);
     font-family: 'Poppins', sans-serif;
-    color: #000000;
-    strong {
-        color: #5a4634;
-    }
+    color: var(--text);
 
+}
+
+.container h1 strong {
+    color: var(--accent);
 }
 
 .container p {
@@ -60,7 +61,7 @@ img.fundo {
     font-weight: 1;
     font-size: 23px;
     line-height: 1.6;
-    color: #333333;
+    color: var(--muted);
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.15),
         0 8px 20px rgba(0, 0, 0, 0.2);
     ;
@@ -70,7 +71,7 @@ img.fundo {
     width: 32%;
     ;
     height: 1px;
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: var(--line);
     margin: 40px auto;
     margin-top: -30px;
 }
@@ -79,7 +80,7 @@ img.fundo {
     width: 46%;
     ;
     height: 2px;
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: var(--line);
     margin: 40px auto;
     margin-top: -10px;
 }
@@ -93,7 +94,7 @@ p2 {
     font-weight: 400;
     font-size: 28px;
     line-height: 1.6;
-    color: #333333;
+    color: var(--muted);
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.15),
         0 8px 20px rgba(0, 0, 0, 0.2);
 
@@ -105,7 +106,7 @@ h2 {
     font-weight: 600;
     font-size: 40px;
     line-height: 1.6;
-    color: #333333;
+    color: var(--muted);
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.15),
         0 8px 20px rgba(0, 0, 0, 0.2);
     margin-top: 90px;
@@ -234,7 +235,7 @@ footer {
     text-align: center;
     font-family: 'Poppins', sans-serif;
     font-size: 15px;
-    color: #000000;
+    color: var(--text);
     margin-top: 50px;
 }
 
@@ -245,7 +246,7 @@ p.hobbies {
     font-weight: 400;
     font-size: 22px;
     line-height: 1.6;
-    color: #333333;
+    color: var(--muted);
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.15),
         0 8px 20px rgba(0, 0, 0, 0.2);
 }

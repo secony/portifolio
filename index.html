@@ -1033,7 +1033,6 @@
     }
     body { font-weight: 400 }
     .mono { text-transform: none; letter-spacing: 0; font-size: 13px }
-    .rv, .rv.in { opacity: 1 !important; transform: none !important; transition: none !important }
     html, body { overflow-x: clip }
     .hero { padding: 72px 0 56px; position: relative }
     .hero > * { position: relative; z-index: 1 }
@@ -1122,10 +1121,45 @@
     .grid { border-bottom-color: var(--ln) }
     .card, .card.d { border-top-color: var(--ln) }
     .card:hover, .card.d:hover { border-top-color: #2f4fd8 }
+  
+    /* ===== v6: refinamento, menos badges, ritmo e hover únicos ===== */
+    .pill { border: 0; padding: 0; border-radius: 0; text-transform: none; letter-spacing: 0; font-size: 12px; color: var(--mut) }
+    .pill::before { content: ""; display: inline-block; width: 6px; height: 6px; margin-right: 7px; background: var(--ln); vertical-align: 1px }
+    .pill.on { color: var(--ac2) }
+    .pill.on::before { background: #2f4fd8 }
+    .card, .card.d { padding: 24px 12px }
+    .card h3 { font-size: clamp(22px, 2.6vw, 30px); font-weight: 500; letter-spacing: -.015em }
+    .card.d { padding: 40px 12px }
+    .card.d h3 { font-size: clamp(32px, 4.6vw, 58px); font-weight: 700; letter-spacing: -.03em }
+    .card.d p { font-size: 17px }
+    .card:hover, .card.d:hover { background: transparent }
+    .card:hover h3 { color: var(--ac2) }
+    .card .tg { font: 12.5px/1.7 var(--mono); color: var(--mut) }
+    .card button.o, .card button.o:hover { transform: none }
+  
+    /* ===== v7: movimento com função (revelação, progresso, affordance) ===== */
+    .rv { transition: opacity .7s cubic-bezier(.2, .7, .2, 1), transform .7s cubic-bezier(.2, .7, .2, 1) }
+    .btn, a, .card, .card h3 { transition: color .2s, background-color .2s, border-color .25s }
+    .card button.o { transition: transform .25s cubic-bezier(.2, .7, .2, 1), color .2s }
+    .card:hover button.o { transform: translateX(5px) }
+    #sp { display: none }
+    @supports (animation-timeline: view()) {
+      @keyframes rowin { from { opacity: 0; transform: translateY(18px) } to { opacity: 1; transform: none } }
+      @keyframes sp { from { transform: scaleX(0) } to { transform: scaleX(1) } }
+      .card, .card.d { animation: rowin linear both; animation-timeline: view(); animation-range: entry 0% entry 40% }
+      #sp { display: block; position: fixed; top: 0; left: 0; right: 0; height: 2px; z-index: 90; background: #2f4fd8;
+        transform-origin: 0 50%; animation: sp linear both; animation-timeline: scroll(root) }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .card, .card.d, #sp { animation: none !important }
+      .card:hover button.o { transform: none }
+      #sp { display: none !important }
+    }
   </style>
 </head>
 
 <body>
+  <div id="sp" aria-hidden="true"></div>
   <header>
     <div id="pg" aria-hidden="true"></div>
     <div class="w hb">
@@ -1189,9 +1223,9 @@
         <div class="ab">
           <div class="rv">
             <p class="mono">Sobre mim</p>
-            <h2>Aprendendo a construir software de verdade.</h2>
+            <h2>Estudo Java e construo para entender o que acontece por baixo.</h2>
             <p>Estou construindo minha base em programação com Java e projetos práticos, para entender como as
-              aplicações funcionam por dentro, e não só como elas aparecem na tela.</p>
+              aplicações funcionam por dentro.</p>
             <p>Quero evoluir em programação orientada a objetos, desenvolvimento backend, APIs REST, bancos de dados
               relacionais, segurança de aplicações e boas práticas de arquitetura.</p>
             <ul class="edu" id="edu"></ul>
@@ -1228,7 +1262,7 @@
     <div class="w">
       <span id="rod"></span>
       <span id="rl"></span>
-      <span>Primeiro faça funcionar, depois faça bem feito.</span>
+      <span>Feito à mão em HTML, CSS e JavaScript.</span>
     </div>
   </footer>
 

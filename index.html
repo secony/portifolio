@@ -10,10 +10,11 @@
   <meta property="og:title" content="Guilherme Secone Neves · Desenvolvedor em formação">
   <meta property="og:description" content="Projetos, estudos e trajetória de quem aprende construindo software.">
   <meta property="og:type" content="website">
-  <meta name="theme-color" content="#09090b">
+  <meta name="theme-color" content="#050506">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%2309090b%27/%3E%3Ctext x=%2716%27 y=%2722%27 font-size=%2713%27 font-family=%27sans-serif%27 font-weight=%27700%27 text-anchor=%27middle%27 fill=%27%23fafafa%27%3EGS%3C/text%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg: #09090b;
@@ -1014,6 +1015,113 @@
         opacity: 1
       }
     }
+  
+    /* ===== Redesign v2: papel técnico, tipografia e cards planos ===== */
+    :root {
+      --bg: #eceeed; --bg2: #e1e5e4; --sf: #f6f7f6; --ln: #c4cac8;
+      --fg: #12171a; --mut: #4a5459; --ac: #1a3be8; --ac2: #1a3be8; --ok: #0a7a3d;
+      color-scheme: light;
+      --sans: "Bricolage Grotesque", system-ui, -apple-system, "Segoe UI", sans-serif;
+      --mono: "JetBrains Mono", ui-monospace, "SF Mono", Consolas, monospace
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0c0e10; --bg2: #14181b; --sf: #171b1e; --ln: #2a3034;
+        --fg: #f1f3f2; --mut: #a2abae; --ac: #7f96ff; --ac2: #a4b4ff; --ok: #5fd18a;
+        color-scheme: dark
+      }
+    }
+    body { font-weight: 400 }
+    .mono { text-transform: none; letter-spacing: 0; font-size: 13px }
+    .rv, .rv.in { opacity: 1 !important; transform: none !important; transition: none !important }
+    html, body { overflow-x: clip }
+    .hero { padding: 72px 0 56px; position: relative }
+    .hero > * { position: relative; z-index: 1 }
+    .hero::before {
+      content: ""; position: absolute; top: 0; bottom: 0; left: 50%; width: 100vw; margin-left: -50vw; z-index: 0;
+      pointer-events: none; opacity: .55;
+      background-image: linear-gradient(var(--ln) 1px, transparent 1px), linear-gradient(90deg, var(--ln) 1px, transparent 1px);
+      background-size: 56px 56px;
+      -webkit-mask-image: linear-gradient(180deg, #000 40%, transparent);
+      mask-image: linear-gradient(180deg, #000 40%, transparent)
+    }
+    h1 { text-transform: none; font-weight: 700; letter-spacing: -.04em; line-height: .95; margin: 0 }
+    h2, h3, .role { font-weight: 700; letter-spacing: -.02em }
+    .term { border-radius: 2px; background: var(--sf); border: 1px solid var(--fg); box-shadow: 6px 6px 0 var(--ln) }
+    .term b { color: var(--ok) }
+    .btn { border-radius: 2px }
+    .btn.p { background: var(--ac); border-color: var(--ac); color: #fff }
+    .btn.p:hover { background: var(--fg); border-color: var(--fg); color: var(--bg) }
+    @media (prefers-color-scheme: dark) { .btn.p { color: #0c0e10 } .btn.p:hover { color: #0c0e10; background: var(--fg) } }
+    .card, .card.d { border-radius: 2px; background: var(--sf); animation: none; transition: border-color .15s }
+    .card:hover { transform: none; border-color: var(--fg) }
+    .card::before { display: none }
+    .card.d { border-top: 3px solid var(--ac) }
+    .card:hover button.o { transform: none; color: var(--ac) }
+  
+    /* ===== Redesign v3: índice editorial, painel verde, sem métricas decorativas ===== */
+    :root {
+      --bg: #e8ebe6; --bg2: #dde2db; --sf: #f2f4ef; --ln: #b7c0b5;
+      --fg: #101a15; --mut: #46524b; --ac: #0f6b4a; --ac2: #0f6b4a; --ok: #0f6b4a
+    }
+    @media (prefers-color-scheme: dark) {
+      :root { --bg: #0d1210; --bg2: #141b17; --sf: #141b17; --ln: #29352e; --fg: #ecf1ea; --mut: #9fb0a5; --ac: #8fdcae; --ac2: #8fdcae; --ok: #8fdcae }
+    }
+    .hero { --fg: #eef2e8; --mut: #a9bdb1; --ln: #2f5a4d; --sf: #173f34; --ac: #9be3b8; --ac2: #9be3b8; --ok: #9be3b8 }
+    .hero::before { background: #12342b; background-image: none; opacity: 1; -webkit-mask-image: none; mask-image: none }
+    @media (prefers-color-scheme: dark) { .hero::before { background: #112d25 } }
+    .hero .btn.p { color: #0c2620; background: #9be3b8; border-color: #9be3b8 }
+    .hero .btn.p:hover { background: #eef2e8; border-color: #eef2e8; color: #0c2620 }
+    .hero .btn { color: #eef2e8; border-color: #5b8274 }
+    .term { box-shadow: none; border: 1px solid var(--ln); border-radius: 2px }
+    .ind, .tools, .cnt, section > .w > p.mono:first-child { display: none }
+
+    .grid { display: block; border-bottom: 1px solid var(--fg); margin-top: 32px }
+    .card, .card.d {
+      display: grid; grid-template-columns: 150px minmax(0, 1fr) minmax(0, .7fr) auto; column-gap: 32px; row-gap: 8px;
+      align-items: start; min-height: 0; grid-column: auto; padding: 28px 12px;
+      background: transparent; border: 0; border-top: 1px solid var(--fg); border-radius: 0
+    }
+    .card:hover { background: var(--sf) }
+    .card:focus-within { outline: 2px solid var(--ac); outline-offset: -2px }
+    .card .top { grid-column: 1; grid-row: 1 / 3; flex-direction: column; align-items: flex-start; gap: 10px }
+    .card h3, .card.d h3 { grid-column: 2; grid-row: 1; font-size: clamp(26px, 3.4vw, 44px); line-height: 1.02; margin: 0 }
+    .card p { grid-column: 2; grid-row: 2; margin: 0; max-width: 58ch }
+    .card .tg { grid-column: 3; grid-row: 1 / 3 }
+    .card button.o { grid-column: 4; grid-row: 1 / 3; align-self: start }
+    .card button.o::before { content: ""; position: absolute; inset: 0 }
+    @media (max-width: 820px) {
+      .card, .card.d { grid-template-columns: 1fr auto; column-gap: 16px; padding: 24px 0 }
+      .card .top { grid-column: 1 / -1; grid-row: 1; flex-direction: row; align-items: center }
+      .card h3, .card.d h3 { grid-column: 1; grid-row: 2 }
+      .card p { grid-column: 1 / -1; grid-row: 3 }
+      .card .tg { grid-column: 1 / -1; grid-row: 4 }
+      .card button.o { grid-column: 2; grid-row: 2 }
+    }
+  
+    /* ===== v4: modo escuro fixo, independente da preferência do sistema ===== */
+    :root {
+      --bg: #0d1210; --bg2: #141b17; --sf: #141b17; --ln: #29352e; --fg: #ecf1ea; --mut: #9fb0a5;
+      --ac: #8fdcae; --ac2: #8fdcae; --ok: #8fdcae; color-scheme: dark
+    }
+    .hero::before { background: #112d25 }
+    .btn.p { color: #0c1410 }
+    .btn.p:hover { background: var(--fg); border-color: var(--fg); color: #0c1410 }
+  
+    /* ===== v5: preto com detalhes em azul escuro ===== */
+    :root {
+      --bg: #050506; --bg2: #0b0b0d; --sf: #0e0e11; --ln: #202026; --fg: #f4f4f5; --mut: #9b9ba5;
+      --ac: #2f4fd8; --ac2: #7b93ff; --ok: #7b93ff; color-scheme: dark
+    }
+    .hero { --fg: #f4f4f5; --mut: #9b9ba5; --ln: #202026; --sf: #0e0e11; --ac: #2f4fd8; --ac2: #7b93ff; --ok: #7b93ff }
+    .hero::before { background: #050506 }
+    .term { border-color: #1d2a66 }
+    .btn.p, .hero .btn.p { background: #2f4fd8; border-color: #2f4fd8; color: #fff }
+    .btn.p:hover, .hero .btn.p:hover { background: #f4f4f5; border-color: #f4f4f5; color: #050506 }
+    .hero .btn { color: #f4f4f5; border-color: #34343c }
+    .grid { border-bottom-color: var(--ln) }
+    .card, .card.d { border-top-color: var(--ln) }
+    .card:hover, .card.d:hover { border-top-color: #2f4fd8 }
   </style>
 </head>
 
@@ -1033,13 +1141,11 @@
 
   <main id="topo">
     <div class="hero w">
-      <p class="mono">Portfólio · Backend Java</p>
       <h1>Guilherme<br>Secone Neves<i></i></h1>
       <div class="hrow">
         <div>
           <p class="role">Desenvolvedor em formação.</p>
-          <p class="lead">Construindo software com Java, explorando backend e aprendendo a projetar sistemas que
-            funcionam além da interface.</p>
+          <p class="lead">Estudo Java e orientação a objetos e publico o que construo: um app de finanças, uma Bíblia católica em React e um controle de interface por gestos via webcam. O próximo passo planejado é um projeto backend completo em Java.</p>
           <ul class="chips" id="chips"></ul>
           <div class="btns"><a class="btn p" href="#projetos">Explorar projetos</a><a class="btn" href="#contato">Entrar
               em contato</a></div>
@@ -1064,9 +1170,8 @@
     <section id="projetos">
       <div class="w">
         <p class="mono">Projetos</p>
-        <h2 class="rv">Projetos que saíram do papel.</h2>
-        <p class="sub rv">Aplicações, experimentos e estudos construídos para transformar conhecimento em experiência
-          prática.</p>
+        <h2 class="rv">O que construí até agora.</h2>
+        <p class="sub rv">Cada projeto mostra o problema, as decisões tomadas e o que ainda falta.</p>
         <div class="tools">
           <div class="fl" id="fc" role="group" aria-label="Filtrar por categoria"></div>
           <div class="sf">
@@ -1102,7 +1207,7 @@
     <section id="tecnologias" style="border-top:1px solid var(--ln);padding-bottom:64px">
       <div class="w rv">
         <p class="mono">Tecnologias</p>
-        <h2>Organizadas por uso, não por quantidade.</h2>
+        <h2>O que usei e o que ainda estudo.</h2>
         <p class="sub">Separo o que já usei em projetos do que ainda estou estudando.</p>
         <div class="tk" id="tk"></div>
       </div>
@@ -1111,7 +1216,7 @@
     <section id="contato" class="ct">
       <div class="w rv">
         <p class="mono">Contato</p>
-        <h2>Vamos conversar sobre tecnologia?</h2>
+        <h2>Contato</h2>
         <p class="sub">Estou construindo minha trajetória em desenvolvimento de software e aberto a boas conversas,
           projetos e oportunidades para aprender e contribuir.</p>
         <div class="btns" id="cb"></div>
@@ -1135,7 +1240,7 @@
     /* ===== CONFIGURAÇÃO: edite aqui. Campos vazios ficam ocultos. ===== */
     var PERFIL = {
       nome: "Guilherme Secone Neves", monograma: "GS", local: "São José do Rio Preto, SP",
-      github: "https://github.com/secony", linkedin: "", email: "", curriculo: "",
+      github: "https://github.com/secony", linkedin: "", email: "guilhermeseconeneves@gmail.com", curriculo: "",
       interesses: ["Desenvolvimento backend", "Arquitetura de software", "Cibersegurança"]
     };
     var FORMACAO = [
@@ -1159,13 +1264,13 @@
       { g: "Ferramentas", usei: ["Git", "GitHub", "Visual Studio Code", "Vercel"], estudo: ["IntelliJ IDEA"], prox: [] },
       { g: "Interesses técnicos", usei: [], estudo: [], prox: PERFIL.interesses }
     ];
-    var CATS = ["Backend e Java", "Aplicações web", "Sistemas e produtividade", "Experimentos e estudos"];
+    var CATS = ["Backend e Java", "Aplicações web", "Sistemas e produtividade", "Visão computacional e 3D", "Experimentos e estudos"];
     var PROJETOS = [
       {
         id: "controle-financeiro", nome: "Controle Financeiro", cat: "Sistemas e produtividade", status: "Online", destaque: true,
         resumo: "Controle financeiro pessoal com metas, orçamento por categoria e importação de transações do banco via Open Finance.",
         tags: ["TanStack Start", "Supabase", "Open Finance", "Pluggy"],
-        demo: "https://cash-cadence-corner.lovable.app/", repo: "",
+        demo: "https://cash-cadence-corner.lovable.app/", repo: "https://github.com/secony/cash-cadence-corner",
         problema: "O controle de gastos começou numa planilha do Google Sheets. O projeto reúne lançamentos, metas e saldo mensal numa aplicação própria.",
         objetivo: "Acompanhar receitas, despesas e metas mês a mês, com o saldo sempre conferível.",
         funcs: ["Lançamentos de entradas e saídas", "Metas mensais e metas nomeadas", "Orçamento por categoria e gastos fixos recorrentes", "Reconciliação de saldo", "Relatórios mensais e anuais em CSV e PDF", "Importação de transações do banco via Open Finance (Pluggy), com sincronização manual"],
@@ -1178,12 +1283,31 @@
         id: "verbum", nome: "Verbum", cat: "Aplicações web", status: "Em desenvolvimento",
         resumo: "Bíblia católica com palavra do dia, temas e uma biblioteca pessoal de versículos favoritos.",
         tags: ["Web app", "Vercel"],
-        demo: "https://verbum-sacred-pages.vercel.app/", repo: "",
+        demo: "https://verbum-sacred-pages.vercel.app/", repo: "https://github.com/secony/verbum",
         objetivo: "Reunir a leitura da Bíblia e a organização pessoal de versículos e reflexões em um só lugar.",
         funcs: ["Palavra do dia", "Exploração por temas", "Favoritos e vistos recentemente", "Área católica", "Perfil e modo claro/escuro", "Página com origem e licença do texto bíblico"],
         decisoes: ["O texto em inglês (Douay-Rheims) serve apenas para teste, até haver uma tradução católica em português com licença", "Nada de conteúdo religioso inventado: o que ainda não existe aparece como “Em breve”"],
         desafios: ["Encontrar uma tradução católica em português com licença de uso, ainda sem fonte definida"],
         estado: "Em desenvolvimento. Liturgia diária e santo do dia ainda não estão disponíveis."
+      },
+      {
+        id: "gesture-studio", nome: "Gesture Studio", cat: "Visão computacional e 3D", status: "Em desenvolvimento", destaque: true,
+        resumo: "Controle de elementos visuais por gestos das mãos, com rastreamento em tempo real pela webcam.",
+        tags: ["React", "TypeScript", "MediaPipe", "Vite", "Vitest"],
+        demo: "", repo: "https://github.com/secony/gesture-studio",
+        objetivo: "Explorar novas formas de interação entre pessoas e interfaces, evoluindo para experiências interativas próprias e não só um cursor virtual.",
+        funcs: ["Rastreamento de até duas mãos", "Classificação dos gestos PINCH, OPEN_HAND e FIST", "Estabilização temporal dos gestos", "Cursor virtual suavizado com One Euro Filter", "Motor de interação para eventos discretos", "Playground 2D com seleção, arraste e redimensionamento de objetos"],
+        decisoes: ["O One Euro Filter controla o cursor porque ajusta a suavização conforme a velocidade do movimento; o filtro EMA anterior ficou no código e nos testes como referência experimental"],
+        estado: "Em desenvolvimento. Exige webcam e permissão de câmera, e não tem demonstração online."
+      },
+      {
+        id: "3d-lab", nome: "3D Lab", cat: "Visão computacional e 3D", status: "Online",
+        resumo: "Visualizador de modelos 3D no navegador: importa e inspeciona arquivos GLB, GLTF e STL.",
+        tags: ["Modelos 3D", "GLB", "GLTF", "STL", "Vercel"],
+        demo: "https://3d-labtest.vercel.app/", repo: "",
+        objetivo: "Importar, visualizar e inspecionar modelos 3D direto no navegador, sem instalar nada.",
+        funcs: ["Importação de arquivos GLB, GLTF e STL", "Visualização e inspeção do modelo"],
+        estado: "Demonstração online."
       },
       {
         id: "estudos-java", nome: "Estudos de Java", cat: "Experimentos e estudos", status: "Em andamento",
@@ -1255,7 +1379,7 @@
       }
       $("grid").innerHTML = l.map(function (p, k) {
         var n = PROJETOS.indexOf(p) + 1;
-        return "<article style=\"--i:" + k + "\" class=\"card" + (p.destaque && l.length > 1 ? " d" : "") + "\"><div class=\"top\"><span class=\"mono\">" + (n < 10 ? "0" : "") + n + " · " + esc(p.cat) + "</span><span class=\"pill" + (p.status === "Online" ? " on" : "") + "\">" + esc(p.status) + "</span></div>" +
+        return "<article style=\"--i:" + k + "\" class=\"card" + (p.destaque && l.length > 1 ? " d" : "") + "\"><div class=\"top\"><span class=\"mono\">" + esc(p.cat) + "</span><span class=\"pill" + (p.status === "Online" ? " on" : "") + "\">" + esc(p.status) + "</span></div>" +
           "<h3>" + esc(p.nome) + "</h3><p>" + esc(p.resumo) + "</p><div class=\"tg\">" + esc(p.tags.join(" · ")) + "</div>" +
           "<button class=\"o\" type=\"button\" data-id=\"" + esc(p.id) + "\" aria-label=\"Ver detalhes de " + esc(p.nome) + "\">Ver detalhes →</button></article>";
       }).join("");

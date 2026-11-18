@@ -11,6 +11,7 @@
   <meta property="og:description" content="Projetos, estudos e trajetória de quem aprende construindo software.">
   <meta property="og:type" content="website">
   <meta name="theme-color" content="#050506">
+  <meta name="color-scheme" content="dark">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%2309090b%27/%3E%3Ctext x=%2716%27 y=%2722%27 font-size=%2713%27 font-family=%27sans-serif%27 font-weight=%27700%27 text-anchor=%27middle%27 fill=%27%23fafafa%27%3EGS%3C/text%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1155,18 +1156,55 @@
       .card:hover button.o { transform: none }
       #sp { display: none !important }
     }
+  
+    /* ===== v8: todos os projetos com o mesmo tamanho de fonte ===== */
+    .card, .card.d { padding: 24px 12px }
+    .card h3, .card.d h3 { font-size: clamp(26px, 3.2vw, 40px); font-weight: 700; letter-spacing: -.025em }
+    .card p, .card.d p { font-size: 16px }
+  
+    /* ===== v9: build log, busca Ctrl+K, pular conteúdo ===== */
+    .skip { position: absolute; left: 12px; top: -48px; z-index: 200; background: var(--fg); color: var(--bg); padding: 10px 14px; border-radius: 2px }
+    .skip:focus { top: 12px }
+    .lg { margin-top: 36px }
+    .lg-ax, .lg-r { display: grid; grid-template-columns: 200px minmax(0, 1fr) 190px; column-gap: 24px; align-items: center }
+    .lg-m { position: relative; height: 22px; font: 11.5px var(--mono); color: var(--mut); border-bottom: 1px solid var(--ln) }
+    .lg-m span { position: absolute; top: 0; transform: translateX(-1px); padding-left: 4px; border-left: 1px solid var(--ln) }
+    .lg-r { padding: 16px 0; border-bottom: 1px solid var(--ln) }
+    .lg-n { background: none; border: 0; padding: 0; text-align: left; color: var(--fg); font: 700 18px var(--sans); cursor: pointer }
+    .lg-n:hover { color: var(--ac2) }
+    .lg-t { position: relative; height: 10px }
+    .lg-t i { position: absolute; top: 0; bottom: 0; background: #2f4fd8 }
+    .lg-d { color: var(--mut); text-align: right; white-space: nowrap }
+    @media (max-width: 760px) {
+      .lg-ax, .lg-r { grid-template-columns: 1fr; row-gap: 8px }
+      .lg-ax > span { display: none }
+      .lg-d { text-align: left }
+    }
+    #ck { position: fixed; right: 16px; bottom: 16px; z-index: 80; background: var(--bg2); color: var(--mut); border: 1px solid var(--ln); border-radius: 2px; padding: 8px 12px; font: 12.5px var(--mono); cursor: pointer }
+    #ck:hover { color: var(--fg); border-color: #2f4fd8 }
+    #ck kbd { margin-left: 6px; color: var(--ac2); font: inherit }
+    #cmdk { position: fixed; inset: 0; z-index: 150; background: rgba(0, 0, 0, .72); display: flex; justify-content: center; align-items: flex-start; padding: 14vh 16px 0 }
+    #cmdk[hidden] { display: none }
+    .cp-b { width: min(560px, 100%); background: var(--bg2); border: 1px solid #1d2a66; border-radius: 2px }
+    #cpi { width: 100%; box-sizing: border-box; background: transparent; border: 0; border-bottom: 1px solid var(--ln); color: var(--fg); padding: 16px; font: 16px var(--sans); outline: 0 }
+    #cpl { list-style: none; margin: 0; padding: 6px; max-height: 50vh; overflow: auto }
+    #cpl li { display: flex; justify-content: space-between; gap: 12px; padding: 10px; cursor: pointer; color: var(--fg) }
+    #cpl li em { font: 12px var(--mono); color: var(--mut); font-style: normal }
+    #cpl li[aria-selected="true"] { background: var(--sf); box-shadow: inset 2px 0 #2f4fd8 }
+    #cpl .cp-e { color: var(--mut); cursor: default }
   </style>
 </head>
 
 <body>
   <div id="sp" aria-hidden="true"></div>
+  <a class="skip" href="#projetos">Pular para o conteúdo</a>
   <header>
     <div id="pg" aria-hidden="true"></div>
     <div class="w hb">
       <a class="logo" href="#topo" aria-label="Guilherme Secone Neves, início"><span id="mono">GS</span><i></i></a>
       <button id="mb" type="button" aria-expanded="false" aria-controls="nav">Menu</button>
       <nav id="nav" aria-label="Principal">
-        <a href="#projetos">Projetos</a><a href="#sobre">Sobre mim</a><a href="#tecnologias">Tecnologias</a><a
+        <a href="#projetos">Projetos</a><a href="#sobre">Sobre mim</a><a href="#tecnologias">Tecnologias</a><a href="#log">Build log</a><a
           href="#contato">Contato</a>
         <a class="gh" id="ghl" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
       </nav>
@@ -1244,6 +1282,14 @@
         <h2>O que usei e o que ainda estudo.</h2>
         <p class="sub">Separo o que já usei em projetos do que ainda estou estudando.</p>
         <div class="tk" id="tk"></div>
+      </div>
+    </section>
+
+    <section id="log">
+      <div class="w">
+        <h2>Build log</h2>
+        <p class="sub">Cada barra mostra por quanto tempo um projeto recebeu commits: ela começa no primeiro commit e termina no último. Quanto mais longa, mais tempo o projeto foi mantido. Datas de repositórios públicos, consultadas em 18/11/2026. Clique no nome para abrir o projeto.</p>
+        <div id="lg" class="lg"></div>
       </div>
     </section>
 
@@ -1445,6 +1491,52 @@
     $("dlg").addEventListener("click", function (e) { if (e.target === this) this.close(); });
     $("dlg").addEventListener("close", function () { try { if (location.hash.indexOf("#p-") === 0) history.replaceState(null, "", location.pathname + location.search + "#projetos"); } catch (e) { } });
     if (location.hash.indexOf("#p-") === 0) abrir(location.hash.slice(3));
+
+    (function () {
+      var LOG = [["estudos-java", "Estudos de Java", "2026-03-26", "2026-10-16"], ["controle-financeiro", "Controle Financeiro", "2026-07-24", "2026-10-09"], ["verbum", "Verbum", "2026-10-27", "2026-11-13"], ["gesture-studio", "Gesture Studio", "2026-11-10", "2026-11-16"]];
+      var T0 = Date.UTC(2026, 2, 1), T1 = Date.UTC(2026, 10, 30);
+      function pct(d) { var q = d.split("-"); return (Date.UTC(+q[0], +q[1] - 1, +q[2]) - T0) / (T1 - T0) * 100; }
+      function fmt(d) { var q = d.split("-"); return q[2] + "/" + q[1]; }
+      var m = ["mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov"].map(function (n, i) { return '<span style="left:' + pct("2026-0" + (i + 3) + "-01") + '%">' + n + "</span>"; }).join("");
+      var h = '<div class="lg-ax" aria-hidden="true"><span></span><div class="lg-m">' + m + "</div></div>";
+      LOG.forEach(function (r) {
+        var a = pct(r[2]), b = Math.max(pct(r[3]) - a, 1.2);
+        h += '<div class="lg-r"><button type="button" class="lg-n" data-id="' + r[0] + '">' + r[1] + '</button><div class="lg-t"><i style="left:' + a + "%;width:" + b + '%"></i></div><span class="lg-d mono">' + fmt(r[2]) + " → " + fmt(r[3]) + " (" + Math.round((Date.UTC.apply(null, r[3].split("-").map(function (x, i) { return i === 1 ? +x - 1 : +x; })) - Date.UTC.apply(null, r[2].split("-").map(function (x, i) { return i === 1 ? +x - 1 : +x; }))) / 864e5 + 1) + " dias)</span></div>";
+      });
+      $("lg").innerHTML = h;
+      Array.prototype.forEach.call($("lg").querySelectorAll("button.lg-n"), function (b) { b.onclick = function () { abrir(b.getAttribute("data-id")); }; });
+
+      var cp = document.createElement("div"); cp.id = "cmdk"; cp.hidden = true;
+      cp.innerHTML = '<div class="cp-b" role="dialog" aria-modal="true" aria-label="Buscar no portfólio"><input id="cpi" type="text" placeholder="Buscar projeto, tecnologia ou seção" aria-label="Buscar" autocomplete="off"><ul id="cpl" role="listbox"></ul></div>';
+      document.body.appendChild(cp);
+      var ck = document.createElement("button"); ck.id = "ck"; ck.type = "button"; ck.innerHTML = 'Buscar <kbd>Ctrl K</kbd>'; document.body.appendChild(ck);
+      var secs = [["Projetos", "#projetos"], ["Sobre mim", "#sobre"], ["Tecnologias", "#tecnologias"], ["Build log", "#log"], ["Contato", "#contato"]];
+      var items = PROJETOS.map(function (p) { return { t: p.nome, k: "Projeto", x: p.tags.join(" "), f: function () { abrir(p.id); } }; })
+        .concat(secs.map(function (q) { return { t: q[0], k: "Seção", x: "", f: function () { location.hash = q[1]; } }; }))
+        .concat([{ t: "GitHub", k: "Link", x: "", f: function () { window.open("https://github.com/secony", "_blank", "noopener"); } },
+                 { t: "Enviar e-mail", k: "Link", x: "contato", f: function () { location.href = "mailto:guilhermeseconeneves@gmail.com"; } }]);
+      var cur = [], sel = 0, last = null;
+      function draw() {
+        var q = $("cpi").value.toLowerCase().trim();
+        cur = items.filter(function (i) { return !q || (i.t + " " + i.x).toLowerCase().indexOf(q) > -1; });
+        sel = Math.min(sel, Math.max(cur.length - 1, 0));
+        $("cpl").innerHTML = cur.length ? cur.map(function (i, n) { return '<li role="option" data-n="' + n + '"' + (n === sel ? ' aria-selected="true"' : "") + '><span>' + esc(i.t) + '</span><em>' + i.k + "</em></li>"; }).join("") : '<li class="cp-e">Nada encontrado.</li>';
+      }
+      function openCp() { last = document.activeElement; cp.hidden = false; $("cpi").value = ""; sel = 0; draw(); $("cpi").focus(); }
+      function closeCp() { cp.hidden = true; if (last && last.focus) last.focus(); }
+      function run(n) { var i = cur[n]; if (!i) return; cp.hidden = true; i.f(); }
+      ck.onclick = openCp;
+      cp.addEventListener("mousedown", function (e) { if (e.target === cp) closeCp(); var li = e.target.closest ? e.target.closest("li[data-n]") : null; if (li) run(+li.getAttribute("data-n")); });
+      $("cpi").addEventListener("input", function () { sel = 0; draw(); });
+      document.addEventListener("keydown", function (e) {
+        if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") { e.preventDefault(); cp.hidden ? openCp() : closeCp(); return; }
+        if (cp.hidden) return;
+        if (e.key === "Escape") closeCp();
+        else if (e.key === "ArrowDown") { e.preventDefault(); sel = Math.min(sel + 1, cur.length - 1); draw(); }
+        else if (e.key === "ArrowUp") { e.preventDefault(); sel = Math.max(sel - 1, 0); draw(); }
+        else if (e.key === "Enter") { e.preventDefault(); run(sel); }
+      });
+    })();
 
     /* Sobre, trajetória, tecnologias */
     $("edu").innerHTML = FORMACAO.map(function (f) { return "<li><span>" + esc(f.t) + "</span><span class=\"mono\">" + esc(f.s) + "</span></li>"; }).join("");

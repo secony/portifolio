@@ -1192,6 +1192,22 @@
     #cpl li em { font: 12px var(--mono); color: var(--mut); font-style: normal }
     #cpl li[aria-selected="true"] { background: var(--sf); box-shadow: inset 2px 0 #2f4fd8 }
     #cpl .cp-e { color: var(--mut); cursor: default }
+  
+    /* ===== v10: build log em mapa de calor ===== */
+    .hmw { margin-top: 32px }
+    .hm-m, .hm { display: grid; gap: 3px }
+    .hm-m { height: 18px; font: 11.5px var(--mono); color: var(--mut); margin-bottom: 6px }
+    .hm { grid-template-rows: repeat(7, 1fr); grid-auto-flow: column }
+    .hm i, .hm b { aspect-ratio: 1; border-radius: 1px }
+    .hm i { background: #15151b }
+    .hm i[data-l="1"] { background: #1a2a73 }
+    .hm i[data-l="2"] { background: #2238a6 }
+    .hm i[data-l="3"] { background: #2f4fd8 }
+    .hm i[data-l="4"] { background: #8aa0ff }
+    .hm-s { margin: 16px 0 0; color: var(--mut) }
+    .hl { list-style: none; margin: 28px 0 0; padding: 0; border-top: 1px solid var(--ln) }
+    .hl li { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding: 14px 0; border-bottom: 1px solid var(--ln); align-items: baseline }
+    .hl .mono { color: var(--mut) }
   </style>
 </head>
 
@@ -1288,8 +1304,13 @@
     <section id="log">
       <div class="w">
         <h2>Build log</h2>
-        <p class="sub">Cada barra mostra por quanto tempo um projeto recebeu commits: ela começa no primeiro commit e termina no último. Quanto mais longa, mais tempo o projeto foi mantido. Datas de repositórios públicos, consultadas em 18/11/2026. Clique no nome para abrir o projeto.</p>
-        <div id="lg" class="lg"></div>
+        <p class="sub">Cada quadrado é um dia e fica mais azul quanto mais commits eu fiz nele, no mesmo formato do gráfico do GitHub. Contam só os commits feitos por mim nos repositórios Estudos de Java, Verbum e Gesture Studio, de março a novembro de 2026.</p>
+        <div id="hm-wrap" class="hmw">
+          <div id="hm-m" class="hm-m" aria-hidden="true"></div>
+          <div id="hm" class="hm" role="img"></div>
+          <p id="hm-s" class="hm-s mono"></p>
+        </div>
+        <ul id="hl" class="hl"></ul>
       </div>
     </section>
 
@@ -1493,18 +1514,28 @@
     if (location.hash.indexOf("#p-") === 0) abrir(location.hash.slice(3));
 
     (function () {
-      var LOG = [["estudos-java", "Estudos de Java", "2026-03-26", "2026-10-16"], ["controle-financeiro", "Controle Financeiro", "2026-07-24", "2026-10-09"], ["verbum", "Verbum", "2026-10-27", "2026-11-13"], ["gesture-studio", "Gesture Studio", "2026-11-10", "2026-11-16"]];
-      var T0 = Date.UTC(2026, 2, 1), T1 = Date.UTC(2026, 10, 30);
-      function pct(d) { var q = d.split("-"); return (Date.UTC(+q[0], +q[1] - 1, +q[2]) - T0) / (T1 - T0) * 100; }
-      function fmt(d) { var q = d.split("-"); return q[2] + "/" + q[1]; }
-      var m = ["mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov"].map(function (n, i) { return '<span style="left:' + pct("2026-0" + (i + 3) + "-01") + '%">' + n + "</span>"; }).join("");
-      var h = '<div class="lg-ax" aria-hidden="true"><span></span><div class="lg-m">' + m + "</div></div>";
-      LOG.forEach(function (r) {
-        var a = pct(r[2]), b = Math.max(pct(r[3]) - a, 1.2);
-        h += '<div class="lg-r"><button type="button" class="lg-n" data-id="' + r[0] + '">' + r[1] + '</button><div class="lg-t"><i style="left:' + a + "%;width:" + b + '%"></i></div><span class="lg-d mono">' + fmt(r[2]) + " → " + fmt(r[3]) + " (" + Math.round((Date.UTC.apply(null, r[3].split("-").map(function (x, i) { return i === 1 ? +x - 1 : +x; })) - Date.UTC.apply(null, r[2].split("-").map(function (x, i) { return i === 1 ? +x - 1 : +x; }))) / 864e5 + 1) + " dias)</span></div>";
-      });
-      $("lg").innerHTML = h;
-      Array.prototype.forEach.call($("lg").querySelectorAll("button.lg-n"), function (b) { b.onclick = function () { abrir(b.getAttribute("data-id")); }; });
+      var HM = {"2026-03-26":9,"2026-03-29":1,"2026-04-08":4,"2026-04-09":2,"2026-04-10":1,"2026-04-11":1,"2026-04-15":3,"2026-04-20":1,"2026-04-21":1,"2026-04-22":1,"2026-04-29":2,"2026-05-01":2,"2026-05-11":4,"2026-05-13":1,"2026-09-03":3,"2026-09-10":1,"2026-09-13":6,"2026-09-14":4,"2026-09-16":1,"2026-09-29":1,"2026-09-30":2,"2026-10-01":3,"2026-10-02":5,"2026-10-09":1,"2026-10-10":1,"2026-10-16":1,"2026-10-27":1,"2026-10-28":1,"2026-10-29":1,"2026-10-30":1,"2026-10-31":2,"2026-11-03":3,"2026-11-06":1,"2026-11-10":3,"2026-11-11":3,"2026-11-12":14,"2026-11-13":1,"2026-11-14":4,"2026-11-16":2};
+      var START = Date.UTC(2026, 2, 22), END = Date.UTC(2026, 10, 18), DAY = 864e5;
+      function iso(t) { var d = new Date(t); return d.getUTCFullYear() + "-" + ("0" + (d.getUTCMonth() + 1)).slice(-2) + "-" + ("0" + d.getUTCDate()).slice(-2); }
+      var weeks = Math.ceil((END - START + DAY) / (7 * DAY)), cells = "", mon = "", total = 0, active = 0, run = 0, best = 0, prevM = -1;
+      var NM = ["jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez"];
+      for (var w = 0; w < weeks; w++) {
+        var wm = new Date(START + w * 7 * DAY).getUTCMonth();
+        if (wm !== prevM) { mon += '<span style="grid-column:' + (w + 1) + '">' + NM[wm] + "</span>"; prevM = wm; }
+        for (var d = 0; d < 7; d++) {
+          var t = START + (w * 7 + d) * DAY;
+          if (t > END) { cells += "<b></b>"; continue; }
+          var k = iso(t), n = HM[k] || 0, l = n === 0 ? 0 : n < 3 ? 1 : n < 6 ? 2 : n < 10 ? 3 : 4;
+          if (n) { total += n; active++; run++; if (run > best) best = run; } else run = 0;
+          cells += '<i data-l="' + l + '" title="' + k.split("-").reverse().join("/") + (n ? ": " + n + (n > 1 ? " commits" : " commit") : ": sem commits") + '"></i>';
+        }
+      }
+      $("hm-m").innerHTML = mon; $("hm").innerHTML = cells; $("hm").style.gridTemplateColumns = "repeat(" + weeks + ", 1fr)"; $("hm-m").style.gridTemplateColumns = "repeat(" + weeks + ", 1fr)";
+      var sum = total + " commits em " + active + " dias com atividade; maior sequência: " + best + " dias seguidos.";
+      $("hm-s").textContent = sum; $("hm").setAttribute("aria-label", "Atividade de commits. " + sum);
+      var HL = [["estudos-java", "Estudos de Java", "26/03 → 16/10", "62 commits"], ["controle-financeiro", "Controle Financeiro", "24/07 → 09/10", "feito com o Lovable, commits não contados"], ["verbum", "Verbum", "27/10 → 13/11", "11 commits"], ["gesture-studio", "Gesture Studio", "10/11 → 16/11", "26 commits"]];
+      $("hl").innerHTML = HL.map(function (r) { return '<li><button type="button" class="lg-n" data-id="' + r[0] + '">' + r[1] + '</button><span class="mono">' + r[2] + " · " + r[3] + "</span></li>"; }).join("");
+      Array.prototype.forEach.call($("hl").querySelectorAll("button.lg-n"), function (b) { b.onclick = function () { abrir(b.getAttribute("data-id")); }; });
 
       var cp = document.createElement("div"); cp.id = "cmdk"; cp.hidden = true;
       cp.innerHTML = '<div class="cp-b" role="dialog" aria-modal="true" aria-label="Buscar no portfólio"><input id="cpi" type="text" placeholder="Buscar projeto, tecnologia ou seção" aria-label="Buscar" autocomplete="off"><ul id="cpl" role="listbox"></ul></div>';

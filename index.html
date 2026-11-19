@@ -1242,6 +1242,23 @@
     @media (prefers-reduced-motion: no-preference) { details.fold[open] > :not(summary) { animation: fold .25s ease-out } @keyframes fold { from { opacity: 0; transform: translateY(-4px) } } }
     .hm-d { min-height: 0 }
     .hm-h { margin: 0; color: var(--mut) }
+  
+    /* ===== v13: filtro do log por projeto ===== */
+    .hm-f { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px }
+    .hf { background: transparent; color: var(--mut); border: 1px solid var(--ln); border-radius: 2px; padding: 7px 12px; font: 12.5px var(--mono); cursor: pointer; transition: color .2s, border-color .2s, background-color .2s }
+    .hf:hover { color: var(--fg); border-color: var(--mut) }
+    .hf[aria-pressed="true"] { color: var(--fg); border-color: #2f4fd8; background: #0c1330 }
+    .hf:focus-visible { outline: 2px solid var(--ac2); outline-offset: 2px }
+  
+    /* ===== v14: painel de commits recolhido e compacto ===== */
+    .hm-d { padding: 0 20px }
+    .hm-d .hm-h { padding: 18px 0 }
+    .hm-d details.fold > summary { border-bottom: 0; padding: 18px 0; font-size: 14px }
+    .hm-d details.fold[open] > summary { margin-bottom: 0; border-bottom: 1px solid var(--ln) }
+    .hm-d .cl { max-height: 420px; overflow-y: auto; outline-offset: 2px }
+    .hm-d .cl li { padding: 12px 0; gap: 3px }
+    .hm-d .cl li:first-child { border-top: 0 }
+    .hm-d .cl li .mono { font-size: 12px }
   </style>
 </head>
 
@@ -1340,8 +1357,9 @@
     <section id="log">
       <div class="w">
         <h2>Build log</h2>
-        <p class="sub">Cada quadrado é um dia e fica mais azul quanto mais commits eu fiz nele. Clique em um quadrado para ver o que mudou. Contam só os commits feitos por mim em Estudos de Java, Verbum, Gesture Studio e neste portfólio, de janeiro a novembro de 2026.</p>
+        <p class="sub">Cada quadrado é um dia e fica mais azul quanto mais commits eu fiz nele. Escolha um projeto para ver só os dias dele e clique em um quadrado para ver o que mudou. Contam só os commits feitos por mim em Estudos de Java, Verbum, Gesture Studio e neste portfólio, de janeiro a novembro de 2026.</p>
         <div id="hm-wrap" class="hmw">
+          <div id="hm-f" class="hm-f" role="group" aria-label="Filtrar por projeto"></div>
           <div class="hm-sc"><div class="hm-in">
           <div id="hm-m" class="hm-m" aria-hidden="true"></div>
           <div id="hm" class="hm" role="img"></div>
@@ -1558,31 +1576,48 @@
       var HM = {}; for (var kk in CM) HM[kk] = CM[kk].length;
       var START = Date.UTC(2026, 0, 11), END = Date.UTC(2026, 10, 18), DAY = 864e5;
       function iso(t) { var d = new Date(t); return d.getUTCFullYear() + "-" + ("0" + (d.getUTCMonth() + 1)).slice(-2) + "-" + ("0" + d.getUTCDate()).slice(-2); }
-      var weeks = Math.ceil((END - START + DAY) / (7 * DAY)), cells = "", mon = "", total = 0, active = 0, run = 0, best = 0, prevM = -1;
+      var weeks = Math.ceil((END - START + DAY) / (7 * DAY)), F = -1, ALL = "";
       var NM = ["jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez"];
-      for (var w = 0; w < weeks; w++) {
-        var wm = new Date(START + w * 7 * DAY).getUTCMonth();
-        if (wm !== prevM) { mon += '<span style="grid-column:' + (w + 1) + '">' + NM[wm] + "</span>"; prevM = wm; }
-        for (var d = 0; d < 7; d++) {
-          var t = START + (w * 7 + d) * DAY;
-          if (t > END) { cells += "<b></b>"; continue; }
-          var k = iso(t), n = HM[k] || 0, l = n === 0 ? 0 : n < 3 ? 1 : n < 6 ? 2 : n < 10 ? 3 : 4;
-          if (n) { total += n; active++; run++; if (run > best) best = run; } else run = 0;
-          var lab = k.split("-").reverse().join("/") + (n ? ": " + n + (n > 1 ? " commits" : " commit") : ": sem commits");
-          cells += n ? '<button type="button" class="hc" data-d="' + k + '" data-l="' + l + '" aria-label="' + lab + '" title="' + lab + '"></button>' : '<i data-l="0" title="' + lab + '"></i>';
+      function cn(k) { var L = CM[k] || []; return F < 0 ? L.length : L.filter(function (c) { return c[0] === F; }).length; }
+      function renderHm() {
+        var cells = "", mon = "", total = 0, active = 0, run = 0, best = 0, prevM = -1;
+        for (var w = 0; w < weeks; w++) {
+          var wm = new Date(START + w * 7 * DAY).getUTCMonth();
+          if (wm !== prevM) { mon += '<span style="grid-column:' + (w + 1) + '">' + NM[wm] + "</span>"; prevM = wm; }
+          for (var d = 0; d < 7; d++) {
+            var t = START + (w * 7 + d) * DAY;
+            if (t > END) { cells += "<b></b>"; continue; }
+            var k = iso(t), n = cn(k), l = n === 0 ? 0 : n < 3 ? 1 : n < 6 ? 2 : n < 10 ? 3 : 4;
+            if (n) { total += n; active++; run++; if (run > best) best = run; } else run = 0;
+            var lab = k.split("-").reverse().join("/") + (n ? ": " + n + (n > 1 ? " commits" : " commit") : ": sem commits");
+            cells += n ? '<button type="button" class="hc" data-d="' + k + '" data-l="' + l + '" aria-label="' + lab + '" title="' + lab + '"></button>' : '<i data-l="0" title="' + lab + '"></i>';
+          }
         }
+        $("hm-m").innerHTML = mon; $("hm").innerHTML = cells; $("hm").style.gridTemplateColumns = "repeat(" + weeks + ", 1fr)"; $("hm-m").style.gridTemplateColumns = "repeat(" + weeks + ", 1fr)";
+        var sum = total + " commits" + (F < 0 ? "" : " em " + REPOS[F][1]) + " em " + active + " dias com atividade; maior sequência: " + best + " dias seguidos.";
+        if (F < 0) ALL = total + " commits em " + active + " dias";
+        $("hm-s").textContent = sum; $("hm").setAttribute("aria-label", "Atividade de commits. " + sum);
       }
-      $("hm-m").innerHTML = mon; $("hm").innerHTML = cells; $("hm").style.gridTemplateColumns = "repeat(" + weeks + ", 1fr)"; $("hm-m").style.gridTemplateColumns = "repeat(" + weeks + ", 1fr)";
-      var sum = total + " commits em " + active + " dias com atividade; maior sequência: " + best + " dias seguidos.";
-      $("hm-s").textContent = sum; $("hm").setAttribute("aria-label", "Atividade de commits. " + sum);
+      function chips() {
+        $("hm-f").innerHTML = '<button type="button" class="hf" data-f="-1" aria-pressed="' + (F < 0) + '">Todos</button>' + REPOS.map(function (r, i) { return '<button type="button" class="hf" data-f="' + i + '" aria-pressed="' + (F === i) + '">' + esc(r[1]) + "</button>"; }).join("");
+      }
+      renderHm(); chips();
+      $("hm-f").addEventListener("click", function (e) {
+        var t = e.target.closest ? e.target.closest("button.hf") : null; if (!t) return;
+        F = +t.getAttribute("data-f"); renderHm(); chips();
+        $("hm-d").innerHTML = '<p class="mono hm-h">' + (F < 0 ? "Mostrando todos os projetos. " : "Mostrando só " + esc(REPOS[F][1]) + ". ") + "Clique em um quadrado azul para ver os commits daquele dia.</p>";
+        var nb = $("hm-f").querySelector('[data-f="' + F + '"]'); if (nb) nb.focus();
+      });
       function cnt(i) { var c = 0; for (var q in CM) CM[q].forEach(function (x) { if (x[0] === i) c++; }); return c; }
       var FD = { "26/03": 0 };
+      var dOpen = false;
       function show(k) {
-        var L = CM[k] || [], q = k.split("-");
+        var L = (CM[k] || []).filter(function (c) { return F < 0 || c[0] === F; }), q = k.split("-");
         Array.prototype.forEach.call($("hm").querySelectorAll("button.hc"), function (x) { x.classList.toggle("on", x.getAttribute("data-d") === k); });
-        $("hm-d").innerHTML = '<h3>' + q[2] + "/" + q[1] + "/" + q[0] + " · " + L.length + (L.length > 1 ? " commits" : " commit") + "</h3><ul>" + L.map(function (c) {
-          return '<li><span class="mono">' + esc(REPOS[c[0]][1]) + " · " + c[1] + "</span><strong>" + esc(c[2]) + '</strong><span class="mono">' + c[3] + (c[3] === 1 ? " arquivo" : " arquivos") + " · +" + c[4] + " −" + c[5] + '</span><a href="https://github.com/secony/' + REPOS[c[0]][0] + "/commit/" + c[1] + '" target="_blank" rel="noopener">ver no GitHub</a></li>';
-        }).join("") + "</ul>";
+        $("hm-d").innerHTML = '<details class="fold cm"' + (dOpen ? " open" : "") + "><summary>" + q[2] + "/" + q[1] + "/" + q[0] + " · " + L.length + (L.length > 1 ? " commits" : " commit") + '</summary><ul class="cl" tabindex="0" aria-label="Commits do dia">' + L.map(function (c) {
+          return "<li><strong>" + esc(c[2]) + '</strong><span class="mono">' + esc(REPOS[c[0]][1]) + " · " + c[1] + " · " + c[3] + (c[3] === 1 ? " arquivo" : " arquivos") + " · +" + c[4] + " −" + c[5] + ' · <a href="https://github.com/secony/' + REPOS[c[0]][0] + "/commit/" + c[1] + '" target="_blank" rel="noopener">ver no GitHub</a></span></li>';
+        }).join("") + "</ul></details>";
+        var dt = $("hm-d").querySelector("details"); dt.addEventListener("toggle", function () { dOpen = dt.open; });
       }
       $("hm").addEventListener("click", function (e) { var t = e.target.closest ? e.target.closest("button.hc") : null; if (t) show(t.getAttribute("data-d")); });
       var days = Object.keys(CM); $("hm-d").innerHTML = '<p class="mono hm-h">Clique em um quadrado azul para ver os commits daquele dia.</p>';
@@ -1629,7 +1664,7 @@
     }).join("");
     function lista(t, a) { return a.length ? "<p>" + t + "</p><ul>" + a.map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("") + "</ul>" : ""; }
     $("tk").innerHTML = TECNOLOGIAS.map(function (g, i) {
-      return "<div><details class=\"fold\"" + (i === 0 ? " open" : "") + "><summary><h3>" + esc(g.g) + "</h3></summary>" + lista("Usei em projetos", g.usei) + lista("Estudando", g.estudo) + lista("Próximos passos", g.prox) + "</details></div>";
+      return "<div><details class=\"fold\" open><summary><h3>" + esc(g.g) + "</h3></summary>" + lista("Usei em projetos", g.usei) + lista("Estudando", g.estudo) + lista("Próximos passos", g.prox) + "</details></div>";
     }).join("");
 
     /* Contato */

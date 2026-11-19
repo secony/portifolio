@@ -1208,6 +1208,40 @@
     .hl { list-style: none; margin: 28px 0 0; padding: 0; border-top: 1px solid var(--ln) }
     .hl li { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding: 14px 0; border-bottom: 1px solid var(--ln); align-items: baseline }
     .hl .mono { color: var(--mut) }
+  
+    /* ===== v11: log interativo ===== */
+    .hm button.hc { aspect-ratio: 1; border: 0; padding: 0; border-radius: 1px; cursor: pointer; min-width: 0 }
+    .hm button.hc[data-l="1"] { background: #1a2a73 }
+    .hm button.hc[data-l="2"] { background: #2238a6 }
+    .hm button.hc[data-l="3"] { background: #2f4fd8 }
+    .hm button.hc[data-l="4"] { background: #8aa0ff }
+    .hm button.hc:hover { outline: 1px solid var(--fg) }
+    .hm button.hc.on { outline: 2px solid var(--fg); outline-offset: 1px }
+    .hm button.hc:focus-visible { outline: 2px solid var(--ac2); outline-offset: 2px }
+    .hm-d { margin-top: 24px; border: 1px solid var(--ln); padding: 20px; min-height: 120px }
+    .hm-d h3 { margin: 0 0 12px; font-size: 20px }
+    .hm-d ul { list-style: none; margin: 0; padding: 0 }
+    .hm-d li { display: grid; gap: 4px; padding: 12px 0; border-top: 1px solid var(--ln) }
+    .hm-d li .mono { color: var(--mut) }
+    .hm-d li strong { font-weight: 500; word-break: break-word }
+    .hm-d li a { color: var(--ac2); width: fit-content }
+    .hm-d li a:hover { text-decoration: underline }
+  
+    .hm-sc { overflow-x: auto; padding-bottom: 6px }
+    @media (max-width: 760px) { .hm-in { min-width: 560px } }
+  
+    /* ===== v12: seções recolhíveis ===== */
+    details.fold > summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--ln); font: 13px var(--mono); color: var(--fg) }
+    details.fold > summary::-webkit-details-marker { display: none }
+    details.fold > summary::after { content: "+"; color: var(--ac2); font: 400 20px/1 var(--mono) }
+    details.fold[open] > summary::after { content: "−" }
+    details.fold > summary:hover { color: var(--ac2) }
+    details.fold > summary:focus-visible { outline: 2px solid var(--ac2); outline-offset: 2px }
+    details.fold > summary h3 { margin: 0; font: 700 18px var(--sans); letter-spacing: -.01em }
+    details.fold[open] > summary { margin-bottom: 14px }
+    @media (prefers-reduced-motion: no-preference) { details.fold[open] > :not(summary) { animation: fold .25s ease-out } @keyframes fold { from { opacity: 0; transform: translateY(-4px) } } }
+    .hm-d { min-height: 0 }
+    .hm-h { margin: 0; color: var(--mut) }
   </style>
 </head>
 
@@ -1285,8 +1319,10 @@
             <ul class="edu" id="edu"></ul>
           </div>
           <div class="rv">
-            <p class="mono" style="margin-bottom:20px">Trajetória de aprendizagem</p>
-            <ol class="tl" id="tl"></ol>
+            <details class="fold">
+              <summary>Trajetória de aprendizagem</summary>
+              <ol class="tl" id="tl" style="margin-top:20px"></ol>
+            </details>
           </div>
         </div>
       </div>
@@ -1304,13 +1340,16 @@
     <section id="log">
       <div class="w">
         <h2>Build log</h2>
-        <p class="sub">Cada quadrado é um dia e fica mais azul quanto mais commits eu fiz nele, no mesmo formato do gráfico do GitHub. Contam só os commits feitos por mim nos repositórios Estudos de Java, Verbum e Gesture Studio, de março a novembro de 2026.</p>
+        <p class="sub">Cada quadrado é um dia e fica mais azul quanto mais commits eu fiz nele. Clique em um quadrado para ver o que mudou. Contam só os commits feitos por mim em Estudos de Java, Verbum, Gesture Studio e neste portfólio, de janeiro a novembro de 2026.</p>
         <div id="hm-wrap" class="hmw">
+          <div class="hm-sc"><div class="hm-in">
           <div id="hm-m" class="hm-m" aria-hidden="true"></div>
           <div id="hm" class="hm" role="img"></div>
+          </div></div>
           <p id="hm-s" class="hm-s mono"></p>
+          <div id="hm-d" class="hm-d" aria-live="polite"></div>
         </div>
-        <ul id="hl" class="hl"></ul>
+        <details class="fold"><summary>Períodos por projeto</summary><ul id="hl" class="hl"></ul></details>
       </div>
     </section>
 
@@ -1514,8 +1553,10 @@
     if (location.hash.indexOf("#p-") === 0) abrir(location.hash.slice(3));
 
     (function () {
-      var HM = {"2026-03-26":9,"2026-03-29":1,"2026-04-08":4,"2026-04-09":2,"2026-04-10":1,"2026-04-11":1,"2026-04-15":3,"2026-04-20":1,"2026-04-21":1,"2026-04-22":1,"2026-04-29":2,"2026-05-01":2,"2026-05-11":4,"2026-05-13":1,"2026-09-03":3,"2026-09-10":1,"2026-09-13":6,"2026-09-14":4,"2026-09-16":1,"2026-09-29":1,"2026-09-30":2,"2026-10-01":3,"2026-10-02":5,"2026-10-09":1,"2026-10-10":1,"2026-10-16":1,"2026-10-27":1,"2026-10-28":1,"2026-10-29":1,"2026-10-30":1,"2026-10-31":2,"2026-11-03":3,"2026-11-06":1,"2026-11-10":3,"2026-11-11":3,"2026-11-12":14,"2026-11-13":1,"2026-11-14":4,"2026-11-16":2};
-      var START = Date.UTC(2026, 2, 22), END = Date.UTC(2026, 10, 18), DAY = 864e5;
+      var REPOS = [["estudos-java", "Estudos de Java"], ["verbum", "Verbum"], ["gesture-studio", "Gesture Studio"], ["portifolio", "Portfólio"]];
+      var CM = {"2026-01-12":[[3,"b88306e","testing lists",1,28,4],[3,"b68e9be","Hello World !",1,2,1],[3,"26b68d3","inicio do meu projeto",3,11,0]],"2026-01-13":[[3,"75dd288","estilizando",2,113,54],[3,"f676fd2","organizando",7,57,87],[3,"7b86fb3","organizando",1,78,0]],"2026-01-18":[[3,"a083041",".",2,1,1],[3,"215afc4","changing names",2,1,1],[3,"dd7836e","add contact and changings",10,284,18],[3,"1f5e221","ajusting",9,192,23],[3,"aa2ffba","Image and pages",7,166,143]],"2026-01-19":[[3,"ab2940a","vercel path",1,5,0],[3,"c32451e","index.html",3,3,3]],"2026-01-26":[[3,"de2b3f8","tamanho",3,30,3]],"2026-01-30":[[3,"2cfb7e7","organizando o readme",1,20,30],[3,"eee9e9b","README.md",1,97,0],[3,"83a5048","done",5,38,69],[3,"75cf190","no translate",4,8,8],[3,"d726b7f","test to fix",5,37,1],[3,"8ff84dc","fixing links to vercel",5,26,23],[3,"a9206b0","fix route",1,1,3],[3,"fd3ba08","almost finished",6,154,55]],"2026-02-02":[[3,"e9c5c90","name dark and light",6,21,6],[3,"5e2cf07","Merge branch 'main' of github.com:secony/portif-lio-",0,0,0],[3,"349deab","dark and light",10,160,50]],"2026-02-07":[[3,"74a5272","17 yo",1,1,1]],"2026-03-26":[[0,"3db7d9e","verificaçao do tipo de combustivel e o total de clientes de cada tipo",1,1,1],[0,"260a9aa","verificaçao do tipo de combustivel e o total de clientes de cada tipo",1,38,21],[0,"802c7db","arrumando chaves fora do lugar",1,9,10],[0,"bb99ca2","resolve conflito",0,0,0],[0,"a536b9b","salvando antes do merge",1,1,1],[0,"cdb1f97","verificador de coordenadas",1,23,10],[0,"30ef44f","estudos",1,1,1],[0,"d8034c1","estudos",8,110,0],[0,"dd14340","estudos",8,110,0]],"2026-03-29":[[0,"e43c391","numeros impares ate o num digitado",1,5,37]],"2026-04-08":[[0,"ce3c9d1","instanciaçao",3,45,33],[0,"0ec6222","calcular area de dois tirnagulos e usando package",2,33,31],[0,"10e1c18","funçoes",1,1,1],[0,"bda041c","função",1,21,8]],"2026-04-09":[[0,"0bbfe58","criando um leitor de produto com uma classe distinta",3,31,40],[0,"a037862","simplificação com funções",2,9,4]],"2026-04-10":[[0,"eb9ba77","completando o sistema de entrada e updates de dados",2,25,2]],"2026-04-11":[[0,"ef15de4","leitor de notas de um aluno em 3 bimestres",4,62,64]],"2026-04-15":[[0,"0939e33","estudando",3,36,27],[0,"4ed2168","instanciando o codigo",3,20,35],[0,"b894937","membro estatico em um algoritimo basico",1,17,21]],"2026-04-20":[[0,"40f1c0f","cotação do dolar para real",3,22,40]],"2026-04-21":[[0,"c9fdfd4","sistema bancario de entrada de dados",4,94,34]],"2026-04-22":[[0,"14a1f42","sistema bancario completo",2,52,27]],"2026-04-29":[[0,"ae6a1d3","avançando no estudo de arrays",3,44,11],[0,"fa7dfdc","iniciando estudo de arrays",2,12,101]],"2026-05-01":[[0,"2b43690","exercicio vetores, nome, idade, e altura, e altura media",1,23,12],[0,"18dd39e","exercicio vetores, soma e media de valores",1,12,16]],"2026-05-11":[[0,"f7d751c","achando pessoas menores que 16 anos",1,21,12],[0,"431b511","achando a media das idades",1,3,1],[0,"4c31e72","achando a soma das idades",1,6,0],[0,"4faee96","exercicio vetores (inicio)",1,15,30]],"2026-05-13":[[0,"27f8b43",".",2,1,29]],"2026-05-30":[[3,"1db936d","Rename portfolio.html to index.html",1,0,0],[3,"433a994","Add files via upload",1,1090,0],[3,"b0452c2","Delete vercel.json",1,0,6],[3,"af53cc7","Delete app.js",1,0,44],[3,"34c4186","Delete README.md",1,0,87],[3,"ffa25fe","Delete img directory",8,0,7],[3,"ed3d7a9","Delete css directory",5,0,567],[3,"d9b57e7","Delete html directory",4,0,239],[3,"878ec8e","changing",1,1090,0]],"2026-09-03":[[0,"7881db6","areas de tirangulos com classe",3,50,34],[0,"834a7ac","areas de tirangulos",1,29,3],[0,"c329d0c","de volta",2,8,44]],"2026-09-10":[[0,"8e99a82",".",3,38,42]],"2026-09-13":[[0,"5859eed","adicionando loop",1,17,10],[0,"a60ca52","algoritimo para leitura de dados escolares",3,59,47],[0,"89cf20a","outro treino",3,42,29],[0,"676ed0e","treinando com atributos e metodos",3,29,55],[0,"82ad8d8","finalizando e corrigindo erro \"+=\" para \"-=\"",2,19,2],[0,"e344f3c","to string",2,5,3]],"2026-09-14":[[0,"7e2cb7f","cotaçao dollar, utilizando metodo estatico",3,15,26],[0,"e319516","so sera necessario chamar o nome da classe acompanhado do metodo, e nao mais instanciar um objeto, uma vez que",2,6,7],[0,"dd3a9be","criando um classe para usar membros nao estaticos dentro de uma classe estatica instanciando o objeto",2,22,11],[0,"99c8eb0","sem metodo estatico",2,17,59]],"2026-09-16":[[0,"3b46f54","ajustando o intellij",5,13,28]],"2026-09-29":[[0,"347a63f","exercicio teste, e resolvendo branchs, voltando somente para o main",2,28,0]],"2026-09-30":[[0,"962430d","utilizando dois construtores e comentando",2,15,0],[0,"9946d7e","utilizando um construtor",4,68,29]],"2026-10-01":[[0,"1b3e96c",".",2,13,0],[0,"cfe3588","uso de set e get para mudar e mostrar",1,1,1],[0,"db768bb","uso de set e get para mudar e mostrar",2,16,4]],"2026-10-02":[[0,"d97672b",".",1,1,1],[0,"774dee6","formatando",1,1,0],[0,"06d5a7c",".",2,9,12],[0,"175f22a","sistema bancario como exercicio, arrumando",1,12,6],[0,"52392af","sistema bancario como exercicio",3,72,89]],"2026-10-09":[[0,"018f03b","crud de biblioteca quase completo",3,347,70]],"2026-10-10":[[0,"586bf1d","crud de biblioteca quase completo",1,4,0]],"2026-10-16":[[0,"13a15ac",".",1,1,3]],"2026-10-21":[[3,"19f78a6","Merge remote-tracking branch 'origin/main'",0,0,0],[3,"56176e0","atuallizar",1,1352,466],[3,"41a8267","atualizando",2,476,1090]],"2026-10-27":[[1,"ec79276","first commit",49,5722,0]],"2026-10-28":[[1,"36cd167",".",10,402,5]],"2026-10-29":[[1,"9034540",".",1,1,0]],"2026-10-30":[[1,"c2d731a",".",48,979,2346]],"2026-10-31":[[1,"f256c44","fix: restore missing project files and stabilize build",36,2273,0],[1,"2bdcad4","save (teste)",9,554,1]],"2026-11-03":[[1,"867b76f",".",5,80,63],[1,"f91236a","interface",9,127,76],[1,"794e70d","changes com codex (teste)",5,63,39]],"2026-11-06":[[1,"8607668","melhorias ui",15,172,47]],"2026-11-10":[[2,"79b07b0","implementado redimensionamento",3,109,104],[2,"7022860",".",1,1,0],[2,"5ac969c","Initial commit: Gesture Studio",32,3561,0]],"2026-11-11":[[2,"81adcbc","cursosr melhorado",2,239,107],[2,"97d7b35",".",16,2343,33],[2,"54f75d3",".",9,589,195]],"2026-11-12":[[2,"5ae9a58","fix: handle secondary hand position when temporarily missing",2,4,6],[2,"9f3302c","fix: preserve playground interaction during brief tracking loss",3,141,57],[2,"ba33569","fix(tests): correct drag timeout duration in PlaygroundEngine tests",1,3,3],[2,"404aa0e","feat(gestures): enhance pinch gesture handling and thresholds",6,105,31],[2,"8f60f6f","feat(metrics): add logging for tracking metrics snapshots",1,10,0],[2,"0494bc8","feat(metrics): integrate cursor jitter tracking",1,25,16],[2,"18cee3d","recordTracking",1,6,0],[2,"2746367","Merge branch 'main' of https://github.com/secony/gesture-studio",0,0,0],[2,"3b690e0","metricas",3,609,3],[2,"71a70c6","docs: adiciona roadmap oficial de desenvolvimento",1,163,0],[2,"9b5496a","docs: atualiza README com estado atual do projeto",1,29,30],[2,"9c85c9c","docs: atualiza arquitetura do cursor One Euro",1,50,25],[2,"21207ea","docs: registra One Euro como controlador principal",1,35,12],[2,"f2e1587",".",1,1,0]],"2026-11-13":[[1,"f2e24ba","melhorando interface",15,378,265]],"2026-11-14":[[2,"2253c2f","interface",2,1056,274],[2,"75b1528","feat: implement object management in PlaygroundEngine with add and remove functionality",3,225,14],[2,"65d6b7e","feat: add two-hand object rotation to playground",3,419,31],[2,"9390a2f","Improve finger state gesture classification",2,109,75]],"2026-11-16":[[2,"1419b53","feat: update HandTrackingView to support multiple object types and enhance object action buttons",3,282,66],[2,"856cb98","feat: enhance PlaygroundEngine with object type support and addObject method update",2,196,38]]};
+      var HM = {}; for (var kk in CM) HM[kk] = CM[kk].length;
+      var START = Date.UTC(2026, 0, 11), END = Date.UTC(2026, 10, 18), DAY = 864e5;
       function iso(t) { var d = new Date(t); return d.getUTCFullYear() + "-" + ("0" + (d.getUTCMonth() + 1)).slice(-2) + "-" + ("0" + d.getUTCDate()).slice(-2); }
       var weeks = Math.ceil((END - START + DAY) / (7 * DAY)), cells = "", mon = "", total = 0, active = 0, run = 0, best = 0, prevM = -1;
       var NM = ["jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez"];
@@ -1527,14 +1568,26 @@
           if (t > END) { cells += "<b></b>"; continue; }
           var k = iso(t), n = HM[k] || 0, l = n === 0 ? 0 : n < 3 ? 1 : n < 6 ? 2 : n < 10 ? 3 : 4;
           if (n) { total += n; active++; run++; if (run > best) best = run; } else run = 0;
-          cells += '<i data-l="' + l + '" title="' + k.split("-").reverse().join("/") + (n ? ": " + n + (n > 1 ? " commits" : " commit") : ": sem commits") + '"></i>';
+          var lab = k.split("-").reverse().join("/") + (n ? ": " + n + (n > 1 ? " commits" : " commit") : ": sem commits");
+          cells += n ? '<button type="button" class="hc" data-d="' + k + '" data-l="' + l + '" aria-label="' + lab + '" title="' + lab + '"></button>' : '<i data-l="0" title="' + lab + '"></i>';
         }
       }
       $("hm-m").innerHTML = mon; $("hm").innerHTML = cells; $("hm").style.gridTemplateColumns = "repeat(" + weeks + ", 1fr)"; $("hm-m").style.gridTemplateColumns = "repeat(" + weeks + ", 1fr)";
       var sum = total + " commits em " + active + " dias com atividade; maior sequência: " + best + " dias seguidos.";
       $("hm-s").textContent = sum; $("hm").setAttribute("aria-label", "Atividade de commits. " + sum);
-      var HL = [["estudos-java", "Estudos de Java", "26/03 → 16/10", "62 commits"], ["controle-financeiro", "Controle Financeiro", "24/07 → 09/10", "feito com o Lovable, commits não contados"], ["verbum", "Verbum", "27/10 → 13/11", "11 commits"], ["gesture-studio", "Gesture Studio", "10/11 → 16/11", "26 commits"]];
-      $("hl").innerHTML = HL.map(function (r) { return '<li><button type="button" class="lg-n" data-id="' + r[0] + '">' + r[1] + '</button><span class="mono">' + r[2] + " · " + r[3] + "</span></li>"; }).join("");
+      function cnt(i) { var c = 0; for (var q in CM) CM[q].forEach(function (x) { if (x[0] === i) c++; }); return c; }
+      var FD = { "26/03": 0 };
+      function show(k) {
+        var L = CM[k] || [], q = k.split("-");
+        Array.prototype.forEach.call($("hm").querySelectorAll("button.hc"), function (x) { x.classList.toggle("on", x.getAttribute("data-d") === k); });
+        $("hm-d").innerHTML = '<h3>' + q[2] + "/" + q[1] + "/" + q[0] + " · " + L.length + (L.length > 1 ? " commits" : " commit") + "</h3><ul>" + L.map(function (c) {
+          return '<li><span class="mono">' + esc(REPOS[c[0]][1]) + " · " + c[1] + "</span><strong>" + esc(c[2]) + '</strong><span class="mono">' + c[3] + (c[3] === 1 ? " arquivo" : " arquivos") + " · +" + c[4] + " −" + c[5] + '</span><a href="https://github.com/secony/' + REPOS[c[0]][0] + "/commit/" + c[1] + '" target="_blank" rel="noopener">ver no GitHub</a></li>';
+        }).join("") + "</ul>";
+      }
+      $("hm").addEventListener("click", function (e) { var t = e.target.closest ? e.target.closest("button.hc") : null; if (t) show(t.getAttribute("data-d")); });
+      var days = Object.keys(CM); $("hm-d").innerHTML = '<p class="mono hm-h">Clique em um quadrado azul para ver os commits daquele dia.</p>';
+      var HL = [["estudos-java", "Estudos de Java", "26/03 → 16/10", cnt(0) + " commits"], ["controle-financeiro", "Controle Financeiro", "24/07 → 09/10", "feito com o Lovable, commits não contados"], ["verbum", "Verbum", "27/10 → 13/11", cnt(1) + " commits"], ["gesture-studio", "Gesture Studio", "10/11 → 16/11", cnt(2) + " commits"], ["", "Este portfólio", "desde " + days[0].split("-").reverse().slice(0, 2).join("/") , cnt(3) + " commits"]];
+      $("hl").innerHTML = HL.map(function (r) { return "<li>" + (r[0] ? '<button type="button" class="lg-n" data-id="' + r[0] + '">' + r[1] + "</button>" : '<span class="lg-n">' + r[1] + "</span>") + '<span class="mono">' + r[2] + " · " + r[3] + "</span></li>"; }).join("");
       Array.prototype.forEach.call($("hl").querySelectorAll("button.lg-n"), function (b) { b.onclick = function () { abrir(b.getAttribute("data-id")); }; });
 
       var cp = document.createElement("div"); cp.id = "cmdk"; cp.hidden = true;
@@ -1575,8 +1628,8 @@
       return "<li style=\"--i:" + i + "\" class=\"" + (x.s === "andamento" ? "a" : x.s === "concluido" ? "c" : "") + "\"><strong>" + esc(x.t) + "</strong><span>" + esc(SEC[x.s]) + (x.d ? " · " + esc(x.d) : "") + "</span></li>";
     }).join("");
     function lista(t, a) { return a.length ? "<p>" + t + "</p><ul>" + a.map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("") + "</ul>" : ""; }
-    $("tk").innerHTML = TECNOLOGIAS.map(function (g) {
-      return "<div><h3>" + esc(g.g) + "</h3>" + lista("Usei em projetos", g.usei) + lista("Estudando", g.estudo) + lista("Próximos passos", g.prox) + "</div>";
+    $("tk").innerHTML = TECNOLOGIAS.map(function (g, i) {
+      return "<div><details class=\"fold\"" + (i === 0 ? " open" : "") + "><summary><h3>" + esc(g.g) + "</h3></summary>" + lista("Usei em projetos", g.usei) + lista("Estudando", g.estudo) + lista("Próximos passos", g.prox) + "</details></div>";
     }).join("");
 
     /* Contato */
